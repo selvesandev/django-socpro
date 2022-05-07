@@ -173,5 +173,31 @@ python manage.py createsuperuser
 Register your model in `base/admins.py`
 
 ```python
+from .models import Room
+
+admin.site.register(Room)
+```
+
+#### Relation Models (One to many)
+
+> Create a `Message` class in `base/models.py`.
+
+```python
+class Message(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    room = models.ForeignKey(Room, on_delete=models.CASCADE)  # SET_DEFAULT
+    body = models.TextField()
+    updated = models.DateTimeField(auto_now_add=True)
+    created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.body[0:50]
+```
+
+> Generate Migrations `python manage.py makemigrations`
+> Run the migrations `python manage.py migrate`
+> And finally register the newly create models to the admin panel.
+
+```python
 
 ```
